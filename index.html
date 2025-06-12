@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Untuk Pacarku</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Patrick Hand', cursive;
+      background: #ffe4f0;
+      overflow-x: hidden;
+      
+    }
+
+    .page {
+      height: 100vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      transition: all 0.8s ease-in-out;
+    }
+
+    .page2 {
+      height: 125vh;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+      transition: all 0.8s ease-in-out;
+    }
+
+    .hidden { display: none; }
+
+    .page-one {
+      background: linear-gradient(135deg, #ffb6c1, #ffcce5);
+    }
+
+    .page-one h1 {
+      font-size: 2.5rem;
+      color: #fff;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      margin-bottom: 30px;
+    }
+
+    .start-button {
+      padding: 15px 30px;
+      font-size: 1.5rem;
+      background: #ff6f91;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(255, 111, 145, 0.5);
+      transition: transform 0.2s;
+    }
+
+    .start-button:hover {
+      transform: scale(1.05);
+    }
+
+    .page-two {
+      background: linear-gradient(135deg, #ffd6ec, #ffe7f7);
+      justify-content: flex-start;
+    }
+
+    .bear-image {
+      width: 280px;
+      height: 280px;
+      background-image: url('img/bear-image.png');
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(255, 105, 180, 0.2);
+      animation: floatBear 5s ease-in-out infinite;
+      margin-top: 60px;
+    }
+
+    @keyframes floatBear {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .letter-button {
+      background: none;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+      animation: pulse 2s infinite;
+    }
+
+    .letter-button img {
+      width: 60px;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+
+    .letter-container {
+      margin-top: 30px;
+      max-width: 90%;
+      width: 600px;
+
+      border-radius: 20px;
+      padding: 30px;
+      color: #444;
+      font-size: 1.3rem;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-height: 60vh;
+      overflow-y: auto;
+      transition: all 0.5s ease;
+      position: relative;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      color: #d63384;
+    }
+
+    .back-button:hover {
+      background: #ffc4dd;
+    }
+
+    .sparkles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sparkle {
+      position: absolute;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      animation: sparkleMove 6s linear infinite;
+    }
+
+    @keyframes sparkleMove {
+      0% {
+        transform: translateY(100vh);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .bear-image {
+        width: 200px;
+        height: 200px;
+      }
+      .letter-container {
+        font-size: 1.1rem;
+        padding: 20px;
+        max-height: 50vh;
+      }
+      .start-button {
+        font-size: 1.2rem;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Halaman Pertama -->
+  <div class="page page-one" id="pageOne">
+    <h1>Untuk Pacarku yang Cantikkk lucuuuu <br>💕💌💕</h1>
+    <button class="start-button" onclick="goToPageTwo()">Klik di sini, Sayanggkuuu😖‼</button>
+  </div>
+
+  <!-- Halaman Kedua -->
+  <div  class="page2 page-two hidden" id="pageTwo">
+    <button class="back-button" onclick="goToPageOne()">← Kembali</button>
+
+    <div class="sparkles" id="sparklesContainer"></div>
+
+    <div class="bear-image"></div>
+
+    <button class="letter-button" onclick="showLetter()" onclick="goToPageOne()">
+      <img src="img/envelope.png" alt="Klik untuk membuka surat" />
+    </button>
+
+    <div class="letter-container" id="letterContainer">
+      <p>Halooo Adeee sayangg kakaa yang paling gemesss iniiii</p>
+<p>Kakaa mau bilang satu hal yang penting banget niii buatt adeee akuuu pacalkuuuu iniii hehehe…</p>
+<p>kaloo Kakaa iniiiii sayangg bangettt sama adee kakaa ini, dari segalanya adee inii sayanggg bangetttt!!! </p>
+<p>SAYANGGG BANGETTTTT😣😣😣😍😍😍 </p>
+<p>Kakaa tuh bersyukurr setiap hari bisa punya adee yang lucu, manis, penyayang, gemesss, dan selalu bikin hati kakaa hangattt~~~</p> 
+<p>Setiap harinya bareng adee itu berasa kayak mimpi yang paling indah, dan kakaa nggak mau bangun… karena kakaa mau ada di mimpi itu selamanya, bareng adee terusss~ </p>
+<p>Apapun yang terjadi nanti… suka-duka, tawa-tangis semuanyaa kaka akan selaluu ada sama adee disampingg ade teruss ini yaaa</p>
+<p>Kakaa bakal SELALU ADA buat adee!</p>
+<p>Dari awal ini… sampai nanti, sampai kapan pun itu…</p>
+<p>Kakaa akan jadi support system nomor 1 kamu! 💪🏻🌟</p>
+<p>Sampai kamu jadi orang sukses yang kamu impiin… dan pastinya, suksesnya bareng kakaa juga yaa! </p>
+<p>Nggak ada orang lain di hati kakaa…</p>
+<p>Cuma ADEEE~ satu-satunya yang kakaa cintai, kakaa sayangi, kakaa peluk erat terussss tiap harinya! </p>
+<p>Pokoknyaaa cinta kakaa ke adee tuh bukan main-main,
+ini beneran dari hati yang paling dalam kaka iniiii,</p>
+<p>Kakaa janji akan terus pegang tangan adee…
+nggak bakal lepas, nggak bakal jauh, karena tempat kakaa adalah DI SISI ADEEEE, selalu! </p>
+<p>Terima kasih ya sayangg, udah hadir di hidup kakaa, udah jadi alasan kakaa senyum tiap hari~ 
+Kakaa cinta adee bangettttttttttt!!! 💘💘💘</p>
+<p>SELAMANYA SAMA ADEEEE AKUUUUUUUU~~~~~ 😚💖🐻✨</p>
+<p>LOVEEEEEEEEEE U ADEEEEEEEEE AKUUUUUUUU 🤍🤍🤍💌💟</p>
+      <button onclick="goToSurprise()" style="
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #ffb6c1;
+  border: none;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  animation: pulse 1.5s infinite;
+">🎁 Kejutan Selanjutnya!</button>
+    </div>
+  </div>
+
+  <script>
+    function goToPageTwo() {
+      document.getElementById('pageOne').classList.add('hidden');
+      document.getElementById('pageTwo').classList.remove('hidden');
+      startSparkles();
+    }
+
+    function goToPageOne() {
+      document.getElementById('pageTwo').classList.add('hidden');
+      document.getElementById('pageOne').classList.remove('hidden');
+      stopSparkles();
+    }
+
+    function showLetter() {
+      document.getElementById('letterContainer').style.display = 'block';
+    }
+
+    let sparkleInterval;
+
+    function startSparkles() {
+      const container = document.getElementById('sparklesContainer');
+      const symbols = ['✨', '🌸', '💖', '💫'];
+
+      sparkleInterval = setInterval(() => {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+        sparkle.style.left = Math.random() * 100 + 'vw';
+        sparkle.style.fontSize = Math.random() * 20 + 10 + 'px';
+        sparkle.style.animationDuration = Math.random() * 3 + 3 + 's';
+        container.appendChild(sparkle);
+
+        setTimeout(() => {
+          sparkle.remove();
+        }, 6000);
+      }, 400);
+    }
+
+    function stopSparkles() {
+      clearInterval(sparkleInterval);
+      document.getElementById('sparklesContainer').innerHTML = '';
+    }
+
+    function goToSurprise() {
+  window.location.href = "halaman-buku.html"; // Ganti dengan nama file buku kenangan kamu
+}
+
+  </script>
+
+</body>
+</html>

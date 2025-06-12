@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buku Kenangan Kita</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe0f0, #ffd1f0);
+      overflow-x: hidden;
+      height: 100vh;
+    }
+
+    .book-container {
+      perspective: 2000px;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      padding-bottom: 80px;
+    }
+
+    .book {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      height: 600px;
+      transform-style: preserve-3d;
+    }
+
+    .book-spread {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      background: #fff8f0;
+      border: 3px solid #ffc8dd;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      transition: transform 1s ease-in-out;
+      transform-origin: left center;
+    }
+
+    .book-spread.flipping-left {
+      transform: rotateY(-180deg);
+    }
+
+    .book-spread.flipping-right {
+      transform: rotateY(180deg);
+    }
+
+    .page {
+      width: 50%;
+      height: 100%;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      backface-visibility: hidden;
+    }
+
+    .page-content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px;
+      height: 100%;
+    }
+
+    .photo {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sticker {
+      position: absolute;
+      font-size: 1.5rem;
+      pointer-events: none;
+    }
+
+    .sticker1 { top: 5px; left: 5px; }
+    .sticker2 { top: 5px; right: 5px; }
+    .sticker3 { bottom: 5px; left: 5px; }
+    .sticker4 { bottom: 5px; right: 5px; }
+
+    .nav-buttons {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 10;
+    }
+
+    .nav-buttons button {
+      background: #ff90b3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .nav-buttons button:hover {
+      background: #ff5d8f;
+    }
+
+    @media (max-width: 768px) {
+      .book-container {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 85px;
+        padding-bottom: 100px;
+      }
+      .book {
+        height: 90vh;
+      }
+      .page-content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+      .page {
+        padding: 10px;
+      }
+      .photo {
+        height: 45%;
+      }
+      .nav-buttons {
+        position: static;
+        margin-top: 20px;
+        flex-direction: row;
+        justify-content: center;
+        gap: 20px;
+        padding: 0;
+      }
+    }
+
+    .back-to-letter {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.5);
+      border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      color: #d63384;
+      transition: background 0.3s ease;
+      z-index: 20;
+    }
+
+    .back-to-letter:hover {
+      background: #ffc4dd;
+    }
+
+    /* Cover Styles */
+    .cover {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(145deg, #ffc8dd, #ffe0f0);
+      border: 4px dashed #ff8eb8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: #b3005e;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      padding: 30px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="book-container">
+    <button class="back-to-letter" onclick="goBackToLetter()">← Kembali ke Surat</button>
+    <div class="book" id="book">
+      <div class="cover" onclick="openBook()">Buka ini sayanggkuuu adaa kejutan lainn untukk sayangkuuuu<br>😊🤍🤍</div>
+    </div>
+    <div class="nav-buttons" id="navButtons" style="display: none;">
+      <button onclick="changePage(-1)">⏪ Sebelumnya</button>
+      <button onclick="changePage(1)">Selanjutnya ⏩</button>
+    </div>
+  </div>
+
+  <script>
+    const pages = [
+      [ ["10.jpg", "1.jpg", "6.jpg", "8.jpg"], ["💖", "🌸", "🐻", "💫"] ],
+      [ ["2.jpg", "5.jpg", "7.jpg", "9.jpg"], ["🍓", "🎀", "🐰", "✨"] ],
+      [ ["3.jpg", "15.jpg", "11.jpg", "16.jpg"], ["🐶", "🐱", "🧸", "🦄"] ],
+      [ ["4.jpg", "12.jpg", "13.jpg", "14.jpg"], ["🥰", "🌈", "🍰", "🎉"] ]
+    ];
+
+    let currentPage = 0;
+    let isFlipping = false;
+
+    function createPage(images, stickers) {
+      const page = document.createElement('div');
+      page.className = 'page';
+      const content = document.createElement('div');
+      content.className = 'page-content';
+      for (let j = 0; j < 4; j++) {
+        const photo = document.createElement('div');
+        photo.className = 'photo';
+
+        const img = document.createElement('img');
+        img.src = images[j];
+        img.alt = 'Foto';
+
+        const sticker = document.createElement('div');
+        sticker.className = 'sticker sticker' + (j + 1);
+        sticker.textContent = stickers[j];
+
+        photo.appendChild(img);
+        photo.appendChild(sticker);
+        content.appendChild(photo);
+      }
+      page.appendChild(content);
+      return page;
+    }
+
+    function renderPage() {
+      const book = document.getElementById('book');
+      book.innerHTML = '';
+      const spread = document.createElement('div');
+      spread.className = 'book-spread';
+
+      for (let i = 0; i < 2; i++) {
+        const idx = currentPage * 2 + i;
+        if (idx >= pages.length) break;
+        const [images, stickers] = pages[idx];
+        const page = createPage(images, stickers);
+        spread.appendChild(page);
+      }
+
+      book.appendChild(spread);
+    }
+
+    function changePage(direction) {
+      if (isFlipping) return;
+
+      const maxPage = Math.floor((pages.length - 1) / 2);
+      if ((direction === 1 && currentPage >= maxPage) || (direction === -1 && currentPage <= 0)) return;
+
+      const book = document.getElementById('book');
+      const currentSpread = book.querySelector('.book-spread');
+
+      const newSpread = document.createElement('div');
+      newSpread.className = 'book-spread';
+
+      for (let i = 0; i < 2; i++) {
+        const idx = (currentPage + direction) * 2 + i;
+        if (idx >= pages.length || idx < 0) continue;
+        const [images, stickers] = pages[idx];
+        const page = createPage(images, stickers);
+        newSpread.appendChild(page);
+      }
+
+      book.appendChild(newSpread);
+      requestAnimationFrame(() => {
+        newSpread.classList.add(direction === 1 ? 'flipping-left' : 'flipping-right');
+      });
+
+      isFlipping = true;
+      setTimeout(() => {
+        currentPage += direction;
+        renderPage();
+        isFlipping = false;
+      }, 1000);
+    }
+
+    function openBook() {
+      renderPage();
+      document.getElementById('navButtons').style.display = 'flex';
+    }
+
+    function goBackToLetter() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
