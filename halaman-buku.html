@@ -213,10 +213,10 @@
 
   <script>
     const pages = [
+      [ ["3.jpg", "16.jpg", "11.jpg", "15.jpg"], ["🐶", "🐱", "🧸", "🦄"] ],
+      [ ["4.jpg", "12.jpg", "14.jpg", "13.jpg"], ["🥰", "🌈", "🍰", "🎉"] ],
       [ ["10.jpg", "1.jpg", "6.jpg", "8.jpg"], ["💖", "🌸", "🐻", "💫"] ],
-      [ ["2.jpg", "5.jpg", "7.jpg", "9.jpg"], ["🍓", "🎀", "🐰", "✨"] ],
-      [ ["3.jpg", "15.jpg", "11.jpg", "16.jpg"], ["🐶", "🐱", "🧸", "🦄"] ],
-      [ ["4.jpg", "12.jpg", "13.jpg", "14.jpg"], ["🥰", "🌈", "🍰", "🎉"] ]
+      [ ["2.jpg", "5.jpg", "7.jpg", "9.jpg"], ["🍓", "🎀", "🐰", "✨"] ]
     ];
 
     let currentPage = 0;
@@ -234,6 +234,7 @@
         const img = document.createElement('img');
         img.src = images[j];
         img.alt = 'Foto';
+        img.loading = 'lazy'; // Tambah ini!
 
         const sticker = document.createElement('div');
         sticker.className = 'sticker sticker' + (j + 1);
